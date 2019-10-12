@@ -4,26 +4,23 @@ import Ball from "./classes/Ball.js";
 import Paddle from "./classes/Paddle.js";
 
 class PlayScene extends Phaser.Scene {
-  preload() {
-    this.load.spritesheet("johnny", "./assets/johnny_sprite.png", {
-      frameWidth: 16,
-      frameHeight: 16,
-      margin: 0,
-      spacing: 0
-    });
+  constructor() {
+    super("PlayScene");
   }
 
-  create() {
-    this.johnny = new Ball(this, 100, 100);
-    this.johnny.sprite.setCollideWorldBounds(true);
+  preload() {}
 
+  create() {
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
 
+    this.ball = new Ball(this, 100, 100);
+    this.ball.setCollideWorldBounds(true);
+
     // Left paddle
     this.leftPaddle = new Paddle(this, 30, this.game.config.height / 2, 20, 80);
-    this.physics.add.collider(this.johnny.sprite, this.leftPaddle.sprite);
+    //this.physics.add.collider(this.ball, this.leftPaddle);
 
     // Right paddle
     this.rightPaddle = new Paddle(
@@ -33,20 +30,23 @@ class PlayScene extends Phaser.Scene {
       20,
       80
     );
-    this.physics.add.collider(this.johnny.sprite, this.rightPaddle.sprite);
+    //this.physics.add.collider(this.ball, this.rightPaddle);
 
+    this.physics.add.collider([this.leftPaddle, this.rightPaddle], this.ball);
+    /*
     this.add
       .text(0, 0, "Arrow keys to move paddles!", {
-        font: "8px monospace",
+        font: "32px monospace",
         fill: "#ffffff",
         padding: { x: 1, y: 1 },
         backgroundColor: "#000000"
       })
       .setScrollFactor(0);
+      */
   }
 
   update(time, delta) {
-    this.johnny.update(time, delta);
+    this.ball.update(time, delta);
     this.leftPaddle.update(time, delta);
     this.rightPaddle.update(time, delta);
   }
@@ -54,6 +54,24 @@ class PlayScene extends Phaser.Scene {
   /* <Begin> helper functions added by Kris */
   //
   //
+
+  generateRectangleSprite(width, height) {
+    // Returns key of generated sprite object
+    let spriteKey = "rectangle-sprite-" + width + "x" + height;
+
+    var graphics = this.add
+      .graphics()
+      .fillStyle(0xffffff)
+      .fillRect(0, 0, width, height)
+      .generateTexture(spriteKey, width, height);
+    graphics.destroy();
+
+    return spriteKey;
+  }
+  generateSquareSprite(width) {
+    // Returns key of generated sprite object
+    return this.generateRectangleSprite(width, width);
+  }
 
   addPhysicalRectangle(x, y, width, height, color, alphaIThinkMaybe) {
     // TODO: alphaIThinkMaybe name change
@@ -78,7 +96,7 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 0 }
+      gravity: { x: 0, y: 0 }
     }
   }
 };
