@@ -1,5 +1,5 @@
 {
-  "name": "template-activity",
+  "name": "codesandbox-phaser-template-pong",
   "version": "1.0.0",
   "description": "",
   "main": "index.html",
@@ -12,10 +12,6 @@
   },
   "devDependencies": {
     "parcel-bundler": "^1.6.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dev-launchers-sandbox/project_example.git"
   },
   "keywords": []
 }
