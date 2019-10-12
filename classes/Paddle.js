@@ -1,11 +1,20 @@
 import Phaser from "phaser";
 
-export default class Paddle {
+export default class Paddle extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, width, height) {
+    super(scene, x, y, scene.generateRectangleSprite(width, height));
     this.scene = scene;
 
-    // Create physics stuff
-    this.sprite = scene.addPhysicalRectangle(x, y, width, height, 0xffffff);
+    // Add to rendering engine
+    scene.add.existing(this);
+    // Add to physics engine
+    scene.physics.add.existing(this, false); // second parameter is isStatic
+
+    this.setCollideWorldBounds(true);
+
+    this.setMaxVelocity(0, 350);
+    this.setDrag(1000);
+    this.setBounce(1, 1);
 
     // Track the arrow keys & OPQA
     const {
@@ -34,16 +43,11 @@ export default class Paddle {
 
   update() {
     const keys = this.keys;
-    const sprite = this.sprite;
 
     if (keys.up.isDown) {
-      sprite.setPosition(sprite.x, (sprite.y -= 3));
-      sprite.body.y = sprite.y - sprite.height / 2;
-    }
-
-    if (keys.down.isDown) {
-      sprite.setPosition(sprite.x, (sprite.y += 3));
-      sprite.body.y = sprite.y - sprite.height / 2;
+      this.setVelocity(0, -300);
+    } else if (keys.down.isDown) {
+      this.setVelocity(0, 300);
     }
 
     /*
@@ -81,6 +85,6 @@ export default class Paddle {
   }
 
   destroy() {
-    this.sprite.destroy();
+    super.destroy();
   }
 }
