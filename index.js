@@ -1,13 +1,15 @@
 import Phaser from "phaser";
 
 import EnergyBall from "./classes/EnergyBall.js";
-import Paddle from "./classes/Paddle.js";
+import PaddleBody from "./classes/PaddleBody.js";
+import Portal from "./classes/Portal.js";
 
 class PlayScene extends Phaser.Scene {
   constructor() {
     super("PlayScene");
   }
 
+  // Load assets to the game
   preload() {
     this.load.spritesheet("EnergyBall", "./assets/EnergyBall.png", {
       frameWidth: 66,
@@ -15,10 +17,25 @@ class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
+
+    this.load.spritesheet("Portal", "./assets/Portal.png", {
+      frameWidth: 7,
+      frameHeight: 78,
+      margin: 0,
+      spacing: 0
+    });
+
+    this.load.spritesheet("PaddleBody", "./assets/PaddleBody.png", {
+      frameWidth: 24,
+      frameHeight: 131,
+      margin: 0,
+      spacing: 0
+    });
     this.load.image("background", "assets/poddles background.png");
     //this.load.audio('introMusic', "./assests/Hypnotic-Puzzle3.mp3");
   }
 
+  // Create objects
   create() {
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
@@ -26,14 +43,23 @@ class PlayScene extends Phaser.Scene {
 
     this.background;
     this.ball = new EnergyBall(this, 100, 100);
+    this.leftPortal = new Portal(this, 46, 250);
+    this.rightPortal = new Portal(this, 754, 250);
+    //this.patal=
     this.ball.setCollideWorldBounds(true);
 
     // Left paddle
-    this.leftPaddle = new Paddle(this, 30, this.game.config.height / 2, 20, 80);
+    this.leftPaddle = new PaddleBody(
+      this,
+      30,
+      this.game.config.height / 2,
+      20,
+      80
+    );
     //this.physics.add.collider(this.ball, this.leftPaddle);
 
     // Right paddle
-    this.rightPaddle = new Paddle(
+    this.rightPaddle = new PaddleBody(
       this,
       this.game.config.width - 30,
       this.game.config.height / 2,
