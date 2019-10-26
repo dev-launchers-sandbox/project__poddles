@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-import Ball from "./classes/Ball.js";
+import EnergyBall from "./classes/EnergyBall.js";
 import Paddle from "./classes/Paddle.js";
 
 class PlayScene extends Phaser.Scene {
@@ -8,16 +8,29 @@ class PlayScene extends Phaser.Scene {
     super("PlayScene");
   }
 
-  preload() {}
+  preload() {
+    this.load.spritesheet("EnergyBall", "./assets/EnergyBall.png", {
+      frameWidth: 66,
+      frameHeight: 65,
+      margin: 0,
+      spacing: 0
+    });
+    this.load.image("background", "assets/poddles background.png");
+    //this.load.audio('introMusic', "./assests/Hypnotic-Puzzle3.mp3");
+  }
 
   create() {
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
 
-    this.ball = new Ball(this, 100, 100);
-    this.ball.setCollideWorldBounds(true);
+    this.background = this.add.image(250, 150, "background");
 
+    this.ball1 = new EnergyBall(this, 100, 100);
+    this.ball1.setCollideWorldBounds(true);
+
+    this.ball2 = new EnergyBall(this, 150, 150);
+    this.ball2.setCollideWorldBounds(true);
     // Left paddle
     this.leftPaddle = new Paddle(this, 30, this.game.config.height / 2, 20, 80);
     //this.physics.add.collider(this.ball, this.leftPaddle);
@@ -32,7 +45,11 @@ class PlayScene extends Phaser.Scene {
     );
     //this.physics.add.collider(this.ball, this.rightPaddle);
 
-    this.physics.add.collider([this.leftPaddle, this.rightPaddle], this.ball);
+    this.physics.add.collider(
+      [this.leftPaddle, this.rightPaddle],
+      [this.ball1, this.ball2]
+    );
+    this.physics.add.collider(this.ball1, this.ball2);
     /*
     this.add
       .text(0, 0, "Arrow keys to move paddles!", {
@@ -46,7 +63,8 @@ class PlayScene extends Phaser.Scene {
   }
 
   update(time, delta) {
-    this.ball.update(time, delta);
+    this.ball1.update(time, delta);
+    this.ball2.update(time, delta);
     this.leftPaddle.update(time, delta);
     this.rightPaddle.update(time, delta);
   }
