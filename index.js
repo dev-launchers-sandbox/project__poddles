@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-import Ball from "./classes/Ball.js";
+import EnergyBall from "./classes/EnergyBall.js";
 import Paddle from "./classes/Paddle.js";
 
 class PlayScene extends Phaser.Scene {
@@ -8,14 +8,24 @@ class PlayScene extends Phaser.Scene {
     super("PlayScene");
   }
 
-  preload() {}
+  preload() {
+    this.load.spritesheet("EnergyBall", "./assets/EnergyBall.png", {
+      frameWidth: 66,
+      frameHeight: 65,
+      margin: 0,
+      spacing: 0
+    });
+    this.load.image("background", "assets/poddles background.png");
+    //this.load.audio('introMusic', "./assests/Hypnotic-Puzzle3.mp3");
+  }
 
   create() {
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
 
-    this.ball = new Ball(this, 100, 100);
+    this.background;
+    this.ball = new EnergyBall(this, 100, 100);
     this.ball.setCollideWorldBounds(true);
 
     // Left paddle
@@ -86,8 +96,8 @@ class PlayScene extends Phaser.Scene {
 
 const config = {
   type: Phaser.AUTO,
-  width: 500,
-  height: 300,
+  width: 800,
+  height: 500,
   parent: "game-container",
   pixelArt: true,
   zoom: 0.75,
