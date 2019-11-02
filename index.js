@@ -3,6 +3,7 @@ import Phaser from "phaser";
 import EnergyBall from "./classes/EnergyBall.js";
 import PaddleBody from "./classes/PaddleBody.js";
 import Portal from "./classes/Portal.js";
+import PaddleContainer from "./classes/PaddleContainer.js";
 
 class PlayScene extends Phaser.Scene {
   constructor() {
@@ -12,26 +13,26 @@ class PlayScene extends Phaser.Scene {
   // Load assets to the game
   preload() {
     this.load.spritesheet("EnergyBall", "./assets/EnergyBall.png", {
-      frameWidth: 66,
-      frameHeight: 65,
+      frameWidth: 55,
+      frameHeight: 54,
       margin: 0,
       spacing: 0
     });
 
     this.load.spritesheet("Portal", "./assets/Portal.png", {
-      frameWidth: 7,
-      frameHeight: 78,
+      frameWidth: 8,
+      frameHeight: 63,
       margin: 0,
       spacing: 0
     });
 
     this.load.spritesheet("PaddleBody", "./assets/PaddleBody.png", {
-      frameWidth: 24,
-      frameHeight: 131,
+      frameWidth: 25,
+      frameHeight: 118,
       margin: 0,
       spacing: 0
     });
-    this.load.image("background", "assets/poddles background.png");
+    this.load.image("background", "assets/FadedBackground.png");
     //this.load.audio('introMusic', "./assests/Hypnotic-Puzzle3.mp3");
   }
 
@@ -42,7 +43,7 @@ class PlayScene extends Phaser.Scene {
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
 
     this.background = this.add.image(250, 150, "background");
-    this.leftPortal = new Portal(this, 46, 250);
+    this.leftPortal = new Portal(this, 47, 150);
     this.rightPortal = new Portal(this, 457, 250);
     //this.patal=
 
