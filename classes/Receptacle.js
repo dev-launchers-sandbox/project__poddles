@@ -2,7 +2,7 @@ import Phaser from "phaser";
 
 export default class EnergyBall extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
-    super(scene, x, y, "EnergyBall");
+    super(scene, x, y, "receptacle");
     this.scene = scene;
 
     // Add to rendering engine
@@ -14,7 +14,7 @@ export default class EnergyBall extends Phaser.Physics.Arcade.Sprite {
       .setMaxVelocity(400, 400)
       .setBounce(3.2, 1);
 
-    this.setVelocity(999, 999);
+    //this.setVelocity(999, 999);
   }
 
   update() {}
