@@ -14,7 +14,7 @@ export default class PaddleBody extends Phaser.Physics.Arcade.Sprite {
 
     this.setMaxVelocity(0, 350);
     this.setDrag(1000);
-    this.setBounce(100, 100);
+    this.setBounce(0, 0);
 
     // Track the arrow keys & OPQA
     const {

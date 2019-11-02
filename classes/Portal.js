@@ -10,7 +10,7 @@ export default class Portal extends Phaser.Physics.Arcade.Sprite {
     // Add to physics engine
     scene.physics.add.existing(this);
 
-    this.setDrag(0, 0).setBounce(3.2, 1);
+    this.setDrag(0, 0).setBounce(0, 0);
 
     this.setVelocity(0, 0);
   }

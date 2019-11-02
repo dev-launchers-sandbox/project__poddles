@@ -41,9 +41,9 @@ class PlayScene extends Phaser.Scene {
     const cursors = this.input.keyboard.createCursorKeys();
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
 
-    this.background;
+    this.background = this.add.image(250, 150, "background");
     this.leftPortal = new Portal(this, 46, 250);
-    this.rightPortal = new Portal(this, 754, 250);
+    this.rightPortal = new Portal(this, 457, 250);
     //this.patal=
 
     this.ball1 = new EnergyBall(this, 100, 100);
@@ -129,8 +129,8 @@ class PlayScene extends Phaser.Scene {
 
 const config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 500,
+  width: 500,
+  height: 300,
   parent: "game-container",
   pixelArt: true,
   zoom: 0.75,
