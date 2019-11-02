@@ -42,12 +42,14 @@ class PlayScene extends Phaser.Scene {
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
 
     this.background;
-    this.ball = new EnergyBall(this, 100, 100);
     this.leftPortal = new Portal(this, 46, 250);
     this.rightPortal = new Portal(this, 754, 250);
     //this.patal=
-    this.ball.setCollideWorldBounds(true);
 
+    this.ball1 = new EnergyBall(this, 100, 100);
+    this.ball1.setCollideWorldBounds(true);
+    this.ball2 = new EnergyBall(this, 150, 150);
+    this.ball2.setCollideWorldBounds(true);
     // Left paddle
     this.leftPaddle = new PaddleBody(
       this,
@@ -68,7 +70,11 @@ class PlayScene extends Phaser.Scene {
     );
     //this.physics.add.collider(this.ball, this.rightPaddle);
 
-    this.physics.add.collider([this.leftPaddle, this.rightPaddle], this.ball);
+    this.physics.add.collider(
+      [this.leftPaddle, this.rightPaddle],
+      [this.ball1, this.ball2]
+    );
+    this.physics.add.collider(this.ball1, this.ball2);
     /*
     this.add
       .text(0, 0, "Arrow keys to move paddles!", {
@@ -82,7 +88,8 @@ class PlayScene extends Phaser.Scene {
   }
 
   update(time, delta) {
-    this.ball.update(time, delta);
+    this.ball1.update(time, delta);
+    this.ball2.update(time, delta);
     this.leftPaddle.update(time, delta);
     this.rightPaddle.update(time, delta);
   }
