@@ -2,7 +2,7 @@ import Phaser from "phaser";
 
 export default class Paddle extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, width, height) {
-    super(scene, x, y, scene.generateRectangleSprite(width, height));
+    super(scene, x, y, "Paddle");
     this.scene = scene;
 
     // Add to rendering engine
