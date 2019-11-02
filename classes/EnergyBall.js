@@ -17,6 +17,12 @@ export default class EnergyBall extends Phaser.Physics.Arcade.Sprite {
     this.setVelocity(999, 999);
   }
 
+  setCoordinate(x, y) {
+    console.log("collide");
+    this.x = x;
+    this.y = y;
+  }
+
   update() {}
 
   destroy() {
