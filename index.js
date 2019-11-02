@@ -17,6 +17,20 @@ class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
+
+    this.load.spritesheet("Portal", "./assets/Portal.png", {
+      frameWidth: 7,
+      frameHeight: 78,
+      margin: 0,
+      spacing: 0
+    });
+
+    this.load.spritesheet("PaddleBody", "./assets/PaddleBody.png", {
+      frameWidth: 24,
+      frameHeight: 131,
+      margin: 0,
+      spacing: 0
+    });
     this.load.image("background", "assets/poddles background.png");
     //this.load.audio('introMusic', "./assests/Hypnotic-Puzzle3.mp3");
   }
