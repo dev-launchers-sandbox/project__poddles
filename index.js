@@ -4,6 +4,7 @@ import EnergyBall from "./classes/EnergyBall.js";
 import PaddleBody from "./classes/PaddleBody.js";
 import Portal from "./classes/Portal.js";
 import PaddleContainer from "./classes/PaddleContainer.js";
+import Receptacle from "./classes/Receptacle.js";
 
 class PlayScene extends Phaser.Scene {
   constructor() {
@@ -33,6 +34,8 @@ class PlayScene extends Phaser.Scene {
       spacing: 0
     });
     this.load.image("background", "assets/FadedBackground.png");
+    this.load.image("receptacle", "assets/recepticle.png");
+
     //this.load.audio('introMusic', "./assests/Hypnotic-Puzzle3.mp3");
   }
 
@@ -45,12 +48,13 @@ class PlayScene extends Phaser.Scene {
     this.background = this.add.image(250, 150, "background");
     this.leftPortal = new Portal(this, 47, 150);
     this.rightPortal = new Portal(this, 457, 250);
+    this.receptacle = new Receptacle(this, 150, 250);
     //this.patal=
 
-    this.ball1 = new EnergyBall(this, 100, 100);
-    this.ball1.setCollideWorldBounds(true);
-    this.ball2 = new EnergyBall(this, 150, 150);
-    this.ball2.setCollideWorldBounds(true);
+    this.ball = new EnergyBall(this, 100, 100);
+    this.ball.setCollideWorldBounds(true);
+    //this.ball2 = new EnergyBall(this, 150, 150);
+    //this.ball2.setCollideWorldBounds(true);
     // Left paddle
     this.leftPaddle = new PaddleBody(
       this,
@@ -71,11 +75,25 @@ class PlayScene extends Phaser.Scene {
     );
     //this.physics.add.collider(this.ball, this.rightPaddle);
 
+    this.physics.add.collider([this.leftPaddle, this.rightPaddle], [this.ball]);
+    this.physics.add.collider(this.ball);
+
     this.physics.add.collider(
-      [this.leftPaddle, this.rightPaddle],
-      [this.ball1, this.ball2]
+      this.leftPortal,
+      this.ball,
+      this.moveBallToRightPortal,
+      this.emptyCallback,
+      this
     );
-    this.physics.add.collider(this.ball1, this.ball2);
+
+    this.physics.add.collider(
+      this.rightPortal,
+      this.ball,
+      this.moveBallToLeftPortal,
+      this.emptyCallback,
+      this
+    );
+
     /*
     this.add
       .text(0, 0, "Arrow keys to move paddles!", {
@@ -89,11 +107,19 @@ class PlayScene extends Phaser.Scene {
   }
 
   update(time, delta) {
-    this.ball1.update(time, delta);
-    this.ball2.update(time, delta);
+    this.ball.update(time, delta);
+    // this.ball2.update(time, delta);
     this.leftPaddle.update(time, delta);
     this.rightPaddle.update(time, delta);
   }
+
+  moveBallToRightPortal(leftPortal, ball) {
+    ball.setCoordinate(this.rightPortal.x, this.rightPortal.y);
+  }
+  moveBallToLeftPortal(rightPortal, ball) {
+    ball.setCoordinate(this.leftPortal.x, this.leftPortal.y);
+  }
+  emptyCallback(obj1, obj2) {}
 
   /* <Begin> helper functions added by Kris */
   //
